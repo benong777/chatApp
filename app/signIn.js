@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const signIn = () => {
 
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Sign In</Text>
     </View>
   )
