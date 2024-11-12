@@ -12,7 +12,7 @@ export const AuthContextProvider = ({children}) => {
     // onAuthStateChange - Redirect user to the sign-in or homepage based on the isAuthenticated state
 
     // setTimeout(() => {
-      setIsAuthenticated(true);
+      setIsAuthenticated(false);
     // }, 3000);
 
   }, [])

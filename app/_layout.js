@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { AuthContextProvider, useAuth } from '../context/authContext';
+// import { AuthContextProvider, useAuth } from '../context/authContext';
 
 const MainLayout = () => {
   const {isAuthenticated} = useAuth();
@@ -14,6 +15,8 @@ const MainLayout = () => {
     if (typeof isAuthenticated == 'undefined') return;
 
     const inApp = segments[0] == '(app)'; // user already in app group
+
+    console.log('isAuthenticated:', isAuthenticated);
 
     if (isAuthenticated && !inApp) {
       // redirect to Home
