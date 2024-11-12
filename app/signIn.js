@@ -1,12 +1,25 @@
 import { Octicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const signIn = () => {
   const router = useRouter();
+
+  // Using useRef instead of state variable bc we don't want the page to refresh when they change
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
+
+  const handleLogin = async () => {
+    if (!emailRef.current || !passwordRef.current) {
+      Alert.alert('Sign In', "Please fill in all the fields!");
+      return;
+    }
+
+    // Login process
+  };
 
   return (
     <View style={{ flex: 1, borderWidth: 1, borderColor: 'red' }}>
@@ -20,6 +33,7 @@ const signIn = () => {
         <View style={{ borderWidth: 1, borderColor: 'red', flexDirection: 'row', alignItems: 'center', backgroundColor: 'white', borderRadius: 8, margin: 16, padding: 12 }}>
           <Octicons style={{ marginLeft: 4 }} name="mail" size='20' color='gray' />
           <TextInput 
+            onChangeText={value => emailRef.current = value}
             style={{ flex: 1, fontSize: 20, marginLeft: 12 }}
             placeholder='Email'
             placeholderTextColor={'gray'}
@@ -28,8 +42,10 @@ const signIn = () => {
         <View style={{ borderWidth: 1, borderColor: 'red', flexDirection: 'row', alignItems: 'center', backgroundColor: 'white', borderRadius: 8, marginHorizontal: 16, padding: 12 }}>
           <Octicons style={{ marginLeft: 4 }} name="lock" size='20' color='gray' />
           <TextInput 
+            onChangeText={value => passwordRef.current = value}
             style={{ flex: 1, fontSize: 20, marginLeft: 12 }}
             placeholder='Password'
+            secureTextEntry
             placeholderTextColor={'gray'}
           />
         </View>
@@ -41,7 +57,7 @@ const signIn = () => {
 
         {/* SignIn/SignUp */}
         <TouchableOpacity 
-          onPress={() => console.log('Signing in...')}
+          onPress={handleLogin}
           style={{ alignItems: 'center', backgroundColor: 'lightblue', margin: 16, padding: 12, borderRadius: 6 }}>
           <Text 
             style={{ fontSize: 16, fontWeight: 'bold' }}>Sign In</Text>
