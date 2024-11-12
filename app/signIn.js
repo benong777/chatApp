@@ -1,12 +1,15 @@
 import { Octicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Loading from '../components/Loading';
 
 const signIn = () => {
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   // Using useRef instead of state variable bc we don't want the page to refresh when they change
   const emailRef = useRef("");
@@ -56,12 +59,23 @@ const signIn = () => {
         </View>
 
         {/* SignIn/SignUp */}
-        <TouchableOpacity 
-          onPress={handleLogin}
-          style={{ alignItems: 'center', backgroundColor: 'lightblue', margin: 16, padding: 12, borderRadius: 6 }}>
-          <Text 
-            style={{ fontSize: 16, fontWeight: 'bold' }}>Sign In</Text>
-        </TouchableOpacity>
+        <View>
+          {
+            loading ? (
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Loading size={128}/>
+              </View>
+            ) : (
+              <TouchableOpacity 
+                onPress={handleLogin}
+                style={{ alignItems: 'center', backgroundColor: 'lightblue', margin: 16, padding: 12, borderRadius: 6 }}>
+                <Text 
+                  style={{ fontSize: 16, fontWeight: 'bold' }}>Sign In</Text>
+              </TouchableOpacity>
+            )
+          }
+        </View>
+
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 16, marginTop: 8 }}>
           <Text style={{ }}>Don't have an account? </Text>
           <Pressable onPress={() => router.push('signUp')}>
