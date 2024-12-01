@@ -1,4 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebaseConfig";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
 
@@ -9,12 +12,16 @@ export const AuthContextProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
 
   useEffect(() => {
-    // onAuthStateChange - Redirect user to the sign-in or homepage based on the isAuthenticated state
-
-    // setTimeout(() => {
-      setIsAuthenticated(false);
-    // }, 3000);
-
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {                   // got authenticated user
+        setIsAuthenticated(true);
+        setUser(user);
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    });
+    return unsub;   // clear hook when component unmounts
   }, [])
 
   const login = async (email, password) => {
@@ -35,9 +42,21 @@ export const AuthContextProvider = ({children}) => {
 
   const register = async (email, password, username, profileUrl) => {
     try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('Register response:', res?.user);
 
+      ////-- Not needed since the useEffect above will trigger and set both
+      // setUser(res?.user);
+      // setIsAuthenticated(true);
+
+      await setDoc(doc(db, 'users', res?.user?.uid), {
+        username,
+        profileUrl,
+        userId: res?.user?.uid
+      });
+      return { success: true, data: res?.user };
     } catch (e) {
-
+      return { success: false, msg: e.message };
     }
   }
 
