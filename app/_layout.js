@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { AuthContextProvider, useAuth } from '../context/authContext';
-// import { AuthContextProvider, useAuth } from '../context/authContext';
 
 const MainLayout = () => {
   const {isAuthenticated} = useAuth();
@@ -24,6 +23,8 @@ const MainLayout = () => {
     } else if (isAuthenticated == false) {
       // redirect to SignIn
       router.replace('signIn');
+    } else {
+      router.replace('signUp');
     }
 
 
