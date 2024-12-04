@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth, db } from "../firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
@@ -14,6 +14,7 @@ export const AuthContextProvider = ({children}) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {                   // got authenticated user
+        console.log('Got user: ', user);
         setIsAuthenticated(true);
         setUser(user);
       } else {
@@ -34,9 +35,10 @@ export const AuthContextProvider = ({children}) => {
 
   const logout = async () => {
     try {
-
+      await signOut(auth);
+      return { success: true }
     } catch (e) {
-
+      return { success: false, msg: e.message, error: e }
     }
   }
 
@@ -56,7 +58,9 @@ export const AuthContextProvider = ({children}) => {
       });
       return { success: true, data: res?.user };
     } catch (e) {
-      return { success: false, msg: e.message };
+      let msg = e.message;
+      if (msg.includes('(auth/invalid-email)')) msg = 'Invalid email'
+      return { success: false, msg };
     }
   }
 
