@@ -6,10 +6,11 @@ import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert }
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Loading from '../components/Loading';
 import CustomKeyboardView from '../components/CustomKeyboardView';
+import { useAuth } from '../context/authContext';
 
 const signIn = () => {
   const router = useRouter();
-
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
   // Using useRef instead of state variable bc we don't want the page to refresh when they change
@@ -22,7 +23,12 @@ const signIn = () => {
       return;
     }
 
-    // Login process
+    setLoading(true);
+    const response = await login(emailRef.current, passwordRef.current);
+    setLoading(false);
+    if (!response.success) {
+      Alert.alert('Sign in', response.msg);
+    }
   };
 
   return (

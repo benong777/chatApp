@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
 import { useAuth } from '../../context/authContext';
 
 export default function Home () {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const handleLogout = async () => {
     await logout();
@@ -13,7 +13,7 @@ export default function Home () {
     <View>
       <Text>HOME</Text>
       <Pressable onPress={handleLogout}>
-        <Text>Sign Out</Text>
+        <Text>Sign O</Text>
       </Pressable>
     </View>
   )
