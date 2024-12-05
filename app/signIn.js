@@ -85,9 +85,7 @@ const signIn = () => {
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 16, marginTop: 8 }}>
           <Text style={{ }}>Don't have an account? </Text>
-          {/* <Pressable onPress={() => router.push('signUp')}> */}
           <Pressable onPress={() => router.push('signUp')}>
-          {/* <Pressable onPress={() => console.log('TEST')}> */}
             <Text style={{ fontWeight: 'bold'}}>Sign Up</Text>
           </Pressable>
         </View>
