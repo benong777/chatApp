@@ -19,7 +19,7 @@ const signIn = () => {
 
   const handleLogin = async () => {
     if (!emailRef.current || !passwordRef.current) {
-      Alert.alert('Sign In', "Please fill in all the fields!");
+      Alert.alert('Sign In', "Please fill in all the fields.");
       return;
     }
 
@@ -60,7 +60,7 @@ const signIn = () => {
           />
         </View>
         <View style={{ alignItems: 'flex-end', marginRight: 16, marginTop: 8 }}>
-          <Pressable onPress={() => console.log('Forgot password clicked')}>
+          <Pressable onPress={() => console.log('Forgot password clicked!')}>
             <Text style={{ }}>Forgot password?</Text>
           </Pressable>
         </View>
