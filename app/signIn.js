@@ -2,7 +2,7 @@ import { Octicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native';
+import { Image, View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Loading from '../components/Loading';
 import CustomKeyboardView from '../components/CustomKeyboardView';
@@ -35,7 +35,15 @@ const signIn = () => {
     <CustomKeyboardView style={{ borderWidth: 1, borderColor: 'red', alignItems: 'center', justifyContent: 'center' }}>
       <StatusBar style="dark" />
       <View style={{ flex: 1, justifyContent: 'center', }}>
-        <View style={{ alignItems: 'center' }}>
+
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Image 
+            style={{ marginTop: 48, marginBottom: 20 }}
+            source={require('../assets/images/react-logo.png')}
+          />
+        </View>
+
+        <View style={{ alignItems: 'center', marginBottom: 8 }}>
           <Text style={{ fontSize: hp(4), fontWeight: 'bold' }}>Sign In</Text>
         </View>
 
