@@ -10,7 +10,7 @@ export default function Home () {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <Text>HOME</Text>
       <Pressable onPress={handleLogout}>
         <Text>Sign Out</Text>
